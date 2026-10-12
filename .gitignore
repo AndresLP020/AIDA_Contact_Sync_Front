@@ -1,0 +1,30 @@
+# Dependencias
+node_modules/
+
+# Build de Next.js
+.next/
+out/
+next-env.d.ts
+*.tsbuildinfo
+
+# Pruebas
+coverage/
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+# Cookies de sesión generadas por tests/e2e/global-setup.ts
+tests/e2e/.auth/
+
+# Variables de entorno (sólo se versiona el ejemplo)
+.env
+.env.*
+!.env.example
+
+# Logs y sistema
+*.log
+npm-debug.log*
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

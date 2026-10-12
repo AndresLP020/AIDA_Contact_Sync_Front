@@ -1,0 +1,81 @@
+@import "tailwindcss";
+
+/* Tema AIDA Workspace: oscuro con acentos morados. Tokens compatibles con shadcn/ui. */
+:root {
+  color-scheme: dark;
+  --background: #0b0a12;
+  --foreground: #f4f1fa;
+  --card: #13121d;
+  --card-foreground: #f4f1fa;
+  --popover: #15131f;
+  --popover-foreground: #f4f1fa;
+  --primary: #8b5cf6;
+  --primary-foreground: #ffffff;
+  --secondary: #211936;
+  --secondary-foreground: #e9e3f8;
+  --muted: #1a1826;
+  --muted-foreground: #9a96aa;
+  --accent: #241a37;
+  --accent-foreground: #f4f1fa;
+  --destructive: #f43f5e;
+  --destructive-foreground: #ffffff;
+  --success: #34d399;
+  --warning: #fbbf24;
+  --border: #262437;
+  --input: #302e3d;
+  --ring: #8b5cf6;
+  --sidebar: #0e0d16;
+  --radius: 0.75rem;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-sidebar: var(--sidebar);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+  body {
+    background:
+      radial-gradient(ellipse at 80% -20%, #241748 0, transparent 42%),
+      var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    min-height: 100vh;
+  }
+  button:not(:disabled) {
+    cursor: pointer;
+  }
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+}
