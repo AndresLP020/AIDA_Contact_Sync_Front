@@ -1,5 +1,9 @@
+import { existsSync } from 'node:fs';
 import path from 'node:path';
 import type { NextConfig } from 'next';
+
+const monorepoRoot = path.resolve(process.cwd(), '..');
+const inMonorepo = existsSync(path.join(monorepoRoot, 'backend', 'package.json'));
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:4000/api/v1';
 const apiOrigin = new URL(apiUrl).origin;
@@ -26,8 +30,9 @@ const csp = [
 ].join('; ');
 
 const nextConfig: NextConfig = {
-  output: 'standalone',
-  outputFileTracingRoot: path.resolve(process.cwd(), '..'),
+  // Docker usa el servidor standalone. En Vercel ese modo se omite: la plataforma sirve el build ella misma.
+  ...(process.env.VERCEL ? {} : { output: 'standalone' as const }),
+  ...(inMonorepo ? { outputFileTracingRoot: monorepoRoot } : {}),
   transpilePackages: ['@aida/contracts'],
   poweredByHeader: false,
   reactStrictMode: true,

@@ -27,7 +27,7 @@
     "sonner": "^2.0.8",
     "tailwind-merge": "^3.7.0",
     "zod": "^4.1.12",
-    "@aida/contracts": "0.1.0"
+    "@aida/contracts": "file:./contracts"
   },
   "devDependencies": {
     "@playwright/test": "^1.64.0",

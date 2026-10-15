@@ -5,10 +5,9 @@ FROM node:24-alpine AS build
 WORKDIR /app
 COPY package.json package-lock.json ./
 COPY frontend/package.json frontend/
+COPY frontend/contracts/package.json frontend/contracts/
 COPY backend/package.json backend/
-COPY packages/contracts/package.json packages/contracts/
 RUN npm ci --workspace frontend --include-workspace-root=false --no-audit --no-fund
-COPY packages/contracts packages/contracts
 COPY frontend frontend
 ARG NEXT_PUBLIC_API_URL=http://localhost:4000/api/v1
 ARG FRAME_ANCESTORS=

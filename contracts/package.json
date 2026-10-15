@@ -1,0 +1,9 @@
+{
+  "name": "@aida/contracts",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Tipos de la API propia de AIDA Contact Sync (compartidos con el frontend)",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": { "typecheck": "tsc --noEmit --strict --skipLibCheck src/index.ts" }
+}
