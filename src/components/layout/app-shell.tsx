@@ -77,7 +77,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     <div className="flex min-h-screen">
       <aside className="sticky top-0 flex h-screen w-16 shrink-0 flex-col border-r bg-sidebar px-2 py-5 md:w-60 md:px-3.5">
         <div className="mb-8 flex items-center gap-3 px-1 md:px-3">
-          <div className="grid size-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-violet-400 to-violet-700 font-extrabold text-white">A</div>
+          <div className="grid size-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-sky-400 to-blue-700 font-extrabold text-white">A</div>
           <div className="hidden md:block">
             <div className="text-sm font-semibold tracking-wide">AIDA WORKSPACE</div>
             <div className="text-[11px] text-muted-foreground">CONTACT SYNC</div>
@@ -90,8 +90,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               href={href}
               aria-current={path === href ? 'page' : undefined}
               className={cn(
-                'flex items-center justify-center gap-3 rounded-lg px-3 py-2.5 text-[13px] text-[#a7a3b4] transition-colors hover:bg-[#211936] hover:text-white md:justify-start',
-                path === href && 'bg-[#211936] text-white shadow-[inset_2px_0_var(--primary)]',
+                'flex items-center justify-center gap-3 rounded-lg px-3 py-2.5 text-[13px] text-[#9aabc2] transition-colors hover:bg-[#152338] hover:text-white md:justify-start',
+                path === href && 'bg-[#152338] text-white shadow-[inset_2px_0_var(--primary)]',
               )}
             >
               <Icon className="size-4" />
@@ -101,7 +101,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </nav>
         <div className="mt-auto hidden border-t pt-4 md:block">
           <div className="mb-3 flex items-center gap-2.5 px-1">
-            <div className="grid size-8 place-items-center rounded-full bg-[#2a2040] text-xs text-violet-300">{session.me.user.displayName.slice(0, 1)}</div>
+            <div className="grid size-8 place-items-center rounded-full bg-[#1a3050] text-xs text-sky-300">{session.me.user.displayName.slice(0, 1)}</div>
             <div className="min-w-0">
               <div className="truncate text-xs">{session.me.user.displayName}</div>
               <div className="text-[10px] text-muted-foreground">{ROLE_LABEL[session.me.role]}</div>
@@ -118,7 +118,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       <main className="min-w-0 flex-1">
         <header className="flex h-16 items-center justify-between gap-3 border-b px-4 md:px-9">
           <span className="truncate text-xs text-muted-foreground">
-            Workspace / <b className="text-[#e8e3f1]">{current}</b>
+            Workspace / <b className="text-[#e7eef8]">{current}</b>
           </span>
           <div className="flex items-center gap-3 text-xs text-muted-foreground">
             {embedded && <Badge variant="muted">En GHL</Badge>}

@@ -69,7 +69,7 @@ export function SyncView() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <ArrowDownToLine className="size-4 text-violet-300" /> Importar desde GoHighLevel
+              <ArrowDownToLine className="size-4 text-sky-300" /> Importar desde GoHighLevel
             </CardTitle>
             <CardDescription>Crea o actualiza contactos locales por ID GHL. Los contactos con cambios locales pendientes no se sobrescriben.</CardDescription>
           </CardHeader>
@@ -86,7 +86,7 @@ export function SyncView() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <ArrowUpFromLine className="size-4 text-violet-300" /> Exportar cambios a GoHighLevel
+              <ArrowUpFromLine className="size-4 text-sky-300" /> Exportar cambios a GoHighLevel
             </CardTitle>
             <CardDescription>
               {pending.data?.total ?? 0} pendiente(s) y {conflicts.data?.total ?? 0} en conflicto. Se muestra una vista previa con las diferencias antes de enviar.

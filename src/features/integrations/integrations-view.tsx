@@ -14,6 +14,7 @@ import { useSession } from '@/hooks/use-session';
 import { describeError, OAUTH_OUTCOME } from '@/lib/error-messages';
 import { formatDateTime } from '@/lib/utils';
 import { ghlApi } from '@/services/endpoints';
+import { ProvisioningCard } from './provisioning-card';
 import type { GhlStatus } from '@/types';
 
 const STATUS: Record<GhlStatus['status'], { label: string; variant: 'success' | 'warning' | 'destructive' | 'muted' }> = {
@@ -82,7 +83,7 @@ export function IntegrationsView() {
 
       <Card>
         <CardHeader className="flex-row items-center gap-3">
-          <div className="grid size-11 place-items-center rounded-xl bg-secondary text-lg font-bold text-violet-300">G</div>
+          <div className="grid size-11 place-items-center rounded-xl bg-secondary text-lg font-bold text-sky-300">G</div>
           <div className="flex-1">
             <CardTitle>GoHighLevel</CardTitle>
             <CardDescription className="mt-1">OAuth 2.0 · API de Contactos</CardDescription>
@@ -143,10 +144,12 @@ export function IntegrationsView() {
         </CardFooter>
       </Card>
 
+      <ProvisioningCard />
+
       <Card className="mt-4">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <KeyRound className="size-4 text-violet-300" /> Seguridad de la integración
+            <KeyRound className="size-4 text-sky-300" /> Seguridad de la integración
           </CardTitle>
         </CardHeader>
         <CardContent className="grid gap-2 text-xs leading-relaxed text-muted-foreground">

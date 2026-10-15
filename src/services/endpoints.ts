@@ -12,6 +12,7 @@ import type {
   JobStatus,
   Me,
   Paginated,
+  ProvisioningStatus,
   RemoteContactPage,
   SyncDirection,
   SyncJob,
@@ -58,6 +59,8 @@ export const ghlApi = {
   remoteContacts: (q: { page?: number; limit?: number; q?: string }) => api<RemoteContactPage>(`/integrations/ghl/contacts${qs(q)}`),
   startOAuth: () => post<{ authorizationUrl: string }>('/integrations/ghl/oauth/start'),
   disconnect: () => post<{ ok: true }>('/integrations/ghl/disconnect'),
+  provisioning: () => api<ProvisioningStatus>('/integrations/ghl/provisioning'),
+  retryProvisioning: () => post<{ executionId: string | null; alreadyActive: boolean }>('/integrations/ghl/provisioning/retry'),
   simulateRemoteEdit: (ghlContactId: string) => post<{ ghlContactId: string }>('/integrations/ghl/mock/remote-edit', { ghlContactId }),
 };
 

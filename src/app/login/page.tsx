@@ -12,6 +12,14 @@ import { Input, Label } from '@/components/ui/form-controls';
 import { type LoginForm, loginSchema } from '@/lib/schemas';
 import { authApi } from '@/services/endpoints';
 
+/**
+ * Sólo para entornos de demostración con datos FICTICIOS (NEXT_PUBLIC_SHOW_DEMO_HINT=true; false por defecto en Docker).
+ * La contraseña es la de los usuarios del seed (SEED_DEMO_PASSWORD o su valor por defecto de prisma/seed.ts).
+ * Nunca activar en un entorno con usuarios o datos reales: cualquiera que abra el login la verá.
+ */
+const SHOW_DEMO_HINT = process.env.NEXT_PUBLIC_SHOW_DEMO_HINT === 'true';
+const DEMO_PASSWORD = process.env.NEXT_PUBLIC_DEMO_PASSWORD || 'AidaDemo#2026';
+
 
 function LoginCard() {
   const router = useRouter();
@@ -36,7 +44,7 @@ function LoginCard() {
     <main className="grid min-h-screen place-items-center p-5">
       <section className="w-full max-w-[410px] rounded-2xl border bg-card p-8 shadow-2xl shadow-black/50">
         <div className="flex items-center gap-3">
-          <div className="grid size-9 place-items-center rounded-xl bg-gradient-to-br from-violet-400 to-violet-700 font-extrabold text-white">A</div>
+          <div className="grid size-9 place-items-center rounded-xl bg-gradient-to-br from-sky-400 to-blue-700 font-extrabold text-white">A</div>
           <div>
             <div className="text-sm font-semibold tracking-wide">AIDA WORKSPACE</div>
             <div className="text-[11px] text-muted-foreground">CONTACT SYNC</div>
@@ -73,12 +81,20 @@ function LoginCard() {
           </Button>
         </form>
 
-        {process.env.NEXT_PUBLIC_SHOW_DEMO_HINT === 'true' && (
-          <Alert className="mt-5">
+        {SHOW_DEMO_HINT && (
+          <Alert className="mt-5" data-testid="demo-hint">
             <ShieldCheck />
-            <span>
-              Entorno local: usuarios ficticios <code>demo@aida.test</code> (owner), <code>editor@aida.test</code>, <code>viewer@aida.test</code>, <code>sur@aida.test</code> (otra empresa). Contraseña: la definida en <code>SEED_DEMO_PASSWORD</code>.
-            </span>
+            <div className="grid gap-2">
+              <span>
+                Entorno de demostración: usuarios ficticios <code>demo@aida.test</code> (owner), <code>editor@aida.test</code>, <code>viewer@aida.test</code>, <code>sur@aida.test</code> (otra empresa).
+              </span>
+              <span>
+                Contraseña: <code className="select-all font-semibold" data-testid="demo-password">{DEMO_PASSWORD}</code>
+              </span>
+              <Button type="button" variant="outline" size="sm" className="justify-self-start" onClick={() => form.reset({ email: 'demo@aida.test', password: DEMO_PASSWORD })}>
+                Usar cuenta demo
+              </Button>
+            </div>
           </Alert>
         )}
         <p className="mt-5 text-[11px] text-muted-foreground">La sesión dura poco y se guarda en una cookie HttpOnly; el navegador nunca recibe tokens de GHL.</p>

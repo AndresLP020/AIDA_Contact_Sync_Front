@@ -64,7 +64,7 @@ export function DiagnosticsView() {
       <div className="grid gap-3 md:grid-cols-2">
         {rows.map(r => (
           <Card key={r.label} className="flex items-center gap-3 p-4" data-testid={`diag-${r.label}`}>
-            <div className="grid size-10 place-items-center rounded-lg bg-secondary text-violet-300">
+            <div className="grid size-10 place-items-center rounded-lg bg-secondary text-sky-300">
               <r.icon className="size-4" />
             </div>
             <div className="min-w-0 flex-1">

@@ -14,7 +14,7 @@ export function PageHeader({ eyebrow, title, description, actions }: { eyebrow: 
   return (
     <div className="mb-6 flex flex-wrap items-start justify-between gap-4">
       <div>
-        <div className="text-[10px] font-bold uppercase tracking-[0.12em] text-violet-400">{eyebrow}</div>
+        <div className="text-[10px] font-bold uppercase tracking-[0.12em] text-sky-400">{eyebrow}</div>
         <h1 className="mt-2 text-2xl font-semibold tracking-tight">{title}</h1>
         <p className="mt-1 text-sm text-muted-foreground">{description}</p>
       </div>
@@ -38,12 +38,12 @@ export function StatCard({ label, value, foot, icon: Icon, loading, tone }: { la
     <Card className="p-5">
       <div className="flex items-start justify-between gap-3">
         <span className="text-xs text-muted-foreground">{label}</span>
-        <span className={cn('rounded-lg bg-secondary p-2 text-violet-300', tone === 'warning' && 'text-amber-300', tone === 'danger' && 'text-rose-300')}>
+        <span className={cn('rounded-lg bg-secondary p-2 text-sky-300', tone === 'warning' && 'text-amber-300', tone === 'danger' && 'text-rose-300')}>
           <Icon className="size-4" />
         </span>
       </div>
       <div className="mt-3 text-2xl font-semibold tracking-tight">{loading ? <Skeleton className="h-7 w-16" /> : value}</div>
-      {foot && <div className="mt-1 text-[11px] text-[#777387]">{foot}</div>}
+      {foot && <div className="mt-1 text-[11px] text-[#7d90a8]">{foot}</div>}
     </Card>
   );
 }

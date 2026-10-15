@@ -1,30 +1,30 @@
 @import "tailwindcss";
 
-/* Tema AIDA Workspace: oscuro con acentos morados. Tokens compatibles con shadcn/ui. */
+/* Tema AIDA Workspace: oscuro, acentos azules. Tokens compatibles con shadcn/ui. */
 :root {
   color-scheme: dark;
-  --background: #0b0a12;
-  --foreground: #f4f1fa;
-  --card: #13121d;
-  --card-foreground: #f4f1fa;
-  --popover: #15131f;
-  --popover-foreground: #f4f1fa;
-  --primary: #8b5cf6;
+  --background: #070c16;
+  --foreground: #eef3fb;
+  --card: #101722;
+  --card-foreground: #eef3fb;
+  --popover: #121a28;
+  --popover-foreground: #eef3fb;
+  --primary: #3b82f6;
   --primary-foreground: #ffffff;
-  --secondary: #211936;
-  --secondary-foreground: #e9e3f8;
-  --muted: #1a1826;
-  --muted-foreground: #9a96aa;
-  --accent: #241a37;
-  --accent-foreground: #f4f1fa;
+  --secondary: #152338;
+  --secondary-foreground: #dbe7f8;
+  --muted: #141c2b;
+  --muted-foreground: #93a4bc;
+  --accent: #172840;
+  --accent-foreground: #eef3fb;
   --destructive: #f43f5e;
   --destructive-foreground: #ffffff;
   --success: #34d399;
   --warning: #fbbf24;
-  --border: #262437;
-  --input: #302e3d;
-  --ring: #8b5cf6;
-  --sidebar: #0e0d16;
+  --border: #243044;
+  --input: #2a384c;
+  --ring: #3b82f6;
+  --sidebar: #090e18;
   --radius: 0.75rem;
 }
 
@@ -65,7 +65,7 @@
   }
   body {
     background:
-      radial-gradient(ellipse at 80% -20%, #241748 0, transparent 42%),
+      radial-gradient(ellipse at 80% -20%, #123056 0, transparent 42%),
       var(--background);
     color: var(--foreground);
     font-family: var(--font-sans);

@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description: 'Sincronización controlada de contactos entre GoHighLevel y AIDA Workspace',
   robots: { index: false, follow: false },
 };
-export const viewport: Viewport = { themeColor: '#0b0a12', width: 'device-width', initialScale: 1 };
+export const viewport: Viewport = { themeColor: '#070c16', width: 'device-width', initialScale: 1 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (

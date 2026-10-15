@@ -74,7 +74,7 @@ export function DashboardView() {
               <ul className="divide-y">
                 {jobs.data.items.map(j => (
                   <li key={j.id} className="flex items-center gap-3 py-2.5">
-                    {j.direction === 'import' ? <ArrowDownToLine className="size-4 text-violet-300" /> : <ArrowUpFromLine className="size-4 text-violet-300" />}
+                    {j.direction === 'import' ? <ArrowDownToLine className="size-4 text-sky-300" /> : <ArrowUpFromLine className="size-4 text-sky-300" />}
                     <div className="min-w-0 flex-1">
                       <div className="text-xs font-medium">{j.direction === 'import' ? 'Importación' : 'Exportación'}</div>
                       <div className="text-[11px] text-muted-foreground">
