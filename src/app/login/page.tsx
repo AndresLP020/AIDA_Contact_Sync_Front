@@ -17,7 +17,7 @@ import { authApi } from '@/services/endpoints';
  * La contraseña es la de los usuarios del seed (SEED_DEMO_PASSWORD o su valor por defecto de prisma/seed.ts).
  * Nunca activar en un entorno con usuarios o datos reales: cualquiera que abra el login la verá.
  */
-const SHOW_DEMO_HINT = process.env.NEXT_PUBLIC_SHOW_DEMO_HINT === 'true';
+const DEMO_EMAIL = 'demo@aida.test';
 const DEMO_PASSWORD = process.env.NEXT_PUBLIC_DEMO_PASSWORD || 'AidaDemo#2026';
 
 
@@ -26,7 +26,7 @@ function LoginCard() {
   const params = useSearchParams();
   const qc = useQueryClient();
   const [error, setError] = useState<unknown>(null);
-  const form = useForm<LoginForm>({ resolver: zodResolver(loginSchema), defaultValues: { email: '', password: '' } });
+  const form = useForm<LoginForm>({ resolver: zodResolver(loginSchema), defaultValues: { email: DEMO_EMAIL, password: DEMO_PASSWORD } });
 
   async function submit(values: LoginForm) {
     setError(null);
@@ -68,7 +68,7 @@ function LoginCard() {
           </div>
           <div className="grid gap-2">
             <Label htmlFor="password">Contraseña</Label>
-            <Input id="password" type="password" autoComplete="current-password" aria-invalid={!!errors.password} {...form.register('password')} />
+            <Input id="password" type="text" autoComplete="current-password" aria-invalid={!!errors.password} {...form.register('password')} />
             {errors.password && <p className="text-[11px] text-rose-300">{errors.password.message}</p>}
           </div>
           <ErrorAlert error={error} />
@@ -81,22 +81,13 @@ function LoginCard() {
           </Button>
         </form>
 
-        {SHOW_DEMO_HINT && (
-          <Alert className="mt-5" data-testid="demo-hint">
-            <ShieldCheck />
-            <div className="grid gap-2">
-              <span>
-                Entorno de demostración: usuarios ficticios <code>demo@aida.test</code> (owner), <code>editor@aida.test</code>, <code>viewer@aida.test</code>, <code>sur@aida.test</code> (otra empresa).
-              </span>
-              <span>
-                Contraseña: <code className="select-all font-semibold" data-testid="demo-password">{DEMO_PASSWORD}</code>
-              </span>
-              <Button type="button" variant="outline" size="sm" className="justify-self-start" onClick={() => form.reset({ email: 'demo@aida.test', password: DEMO_PASSWORD })}>
-                Usar cuenta demo
-              </Button>
-            </div>
-          </Alert>
-        )}
+        <Alert className="mt-5" data-testid="demo-hint">
+          <ShieldCheck />
+          <div className="grid gap-1">
+            <span>Correo: <code className="select-all font-semibold">{DEMO_EMAIL}</code></span>
+            <span>Contraseña: <code className="select-all font-semibold" data-testid="demo-password">{DEMO_PASSWORD}</code></span>
+          </div>
+        </Alert>
         <p className="mt-5 text-[11px] text-muted-foreground">La sesión dura poco y se guarda en una cookie HttpOnly; el navegador nunca recibe tokens de GHL.</p>
       </section>
     </main>
