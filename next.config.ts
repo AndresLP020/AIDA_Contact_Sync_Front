@@ -7,6 +7,7 @@ const inMonorepo = existsSync(path.join(monorepoRoot, 'backend', 'package.json')
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:4000/api/v1';
 const apiOrigin = new URL(apiUrl).origin;
+const connectOrigins = Array.from(new Set([apiOrigin, 'https://aida-contact-sync-back.onrender.com'])).join(' ');
 const isDev = process.env.NODE_ENV !== 'production';
 
 /**
@@ -22,7 +23,7 @@ const csp = [
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob:",
   "font-src 'self' data:",
-  `connect-src 'self' ${apiOrigin}${isDev ? ' ws: wss:' : ''}`,
+  `connect-src 'self' ${connectOrigins}${isDev ? ' ws: wss:' : ''}`,
   `frame-ancestors ${frameAncestors.join(' ')}`,
   "object-src 'none'",
   "base-uri 'self'",

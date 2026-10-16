@@ -2,10 +2,16 @@ import type { ApiErrorBody } from '@/types';
 import { describeError } from '@/lib/error-messages';
 
 /**
- * URL pública del backend tal como la ve el NAVEGADOR (se incrusta en build). No se usan nombres internos de Docker.
+ * URL pública del backend tal como la ve el NAVEGADOR. No se usan nombres internos de Docker.
  * El frontend consume exclusivamente endpoints públicos del backend; nunca llama a GHL directamente.
+ * Si el build de Vercel no recibió NEXT_PUBLIC_API_URL, en *.vercel.app se usa la API de Render.
  */
-export const API_URL = (process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:4000/api/v1').replace(/\/+$/, '');
+const PRODUCTION_API_URL = 'https://aida-contact-sync-back.onrender.com/api/v1';
+const configured = (process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:4000/api/v1').replace(/\/+$/, '');
+export const API_URL =
+  configured.includes('localhost') && typeof window !== 'undefined' && window.location.hostname.endsWith('.vercel.app')
+    ? PRODUCTION_API_URL
+    : configured;
 
 export class ApiError extends Error {
   constructor(
