@@ -32,9 +32,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   useEffect(() => setEmbedded(isEmbedded()), []);
 
   const onHandshake = useCallback(() => void qc.invalidateQueries({ queryKey: SESSION_KEY }), [qc]);
-  // Dentro de la subcuenta no vale la sesión de demostración: entra el usuario de HighLevel de esa location.
-  const demoSessionInsideGhl = embedded && session.me?.session.method === 'password';
-  const handshake = useEmbeddedHandshake(embedded && (session.unauthenticated || demoSessionInsideGhl), onHandshake);
+  // Cada apertura dentro de HighLevel vuelve a identificar la subcuenta, no la sesión de agencia que hubiera quedado.
+  const handshake = useEmbeddedHandshake(embedded, onHandshake);
+  const waitingForSubaccount = embedded && handshake !== 'ok' && handshake !== 'failed';
 
   useEffect(() => {
     if (session.unauthenticated && !isEmbedded()) router.replace('/login?expired=1');
@@ -46,8 +46,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     router.replace('/login');
   }
 
-  if (!session.me || (demoSessionInsideGhl && handshake !== 'ok')) {
-    if (embedded && handshake === 'failed') {
+  if (waitingForSubaccount || !session.me) {
+    if (embedded && handshake === 'failed' && !session.me) {
       return (
         <div className="grid min-h-screen place-items-center p-4">
           <Alert variant="warning" className="max-w-md">
