@@ -47,7 +47,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   }
 
   if (waitingForSubaccount || !session.me) {
-    if (embedded && handshake === 'failed' && !session.me) {
+    if (embedded && handshake === 'failed' && session.isFetched && !session.me) {
       return (
         <div className="grid min-h-screen place-items-center p-4">
           <Alert variant="warning" className="max-w-md">
