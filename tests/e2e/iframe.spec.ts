@@ -73,6 +73,6 @@ test('dentro de GHL solicita el contexto firmado y rechaza un contexto inválido
   const frame = page.frameLocator('#app');
   await expect.poll(() => page.evaluate(() => (window as unknown as { received: { message?: string }[] }).received.map(m => m.message))).toContain('REQUEST_USER_DATA');
   // El backend rechaza el payload (no hay sesión ni shared secret válido) y la app no concede acceso.
-  await expect(frame.getByText(/No se pudo validar tu usuario de GoHighLevel/)).toBeVisible({ timeout: 15_000 });
+  await expect(frame.getByText(/No se pudo validar el usuario de esta subcuenta/)).toBeVisible({ timeout: 15_000 });
   await expect(frame.getByRole('heading', { name: 'Dashboard' })).toHaveCount(0);
 });

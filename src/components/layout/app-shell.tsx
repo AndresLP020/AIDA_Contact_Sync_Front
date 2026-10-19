@@ -32,7 +32,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   useEffect(() => setEmbedded(isEmbedded()), []);
 
   const onHandshake = useCallback(() => void qc.invalidateQueries({ queryKey: SESSION_KEY }), [qc]);
-  const handshake = useEmbeddedHandshake(session.unauthenticated && embedded, onHandshake);
+  // Dentro de la subcuenta no vale la sesión de demostración: entra el usuario de HighLevel de esa location.
+  const demoSessionInsideGhl = embedded && session.me?.session.method === 'password';
+  const handshake = useEmbeddedHandshake(embedded && (session.unauthenticated || demoSessionInsideGhl), onHandshake);
 
   useEffect(() => {
     if (session.unauthenticated && !isEmbedded()) router.replace('/login?expired=1');
@@ -44,19 +46,13 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     router.replace('/login');
   }
 
-  if (!session.me) {
+  if (!session.me || (demoSessionInsideGhl && handshake !== 'ok')) {
     if (embedded && handshake === 'failed') {
       return (
         <div className="grid min-h-screen place-items-center p-4">
           <Alert variant="warning" className="max-w-md">
             <ShieldAlert />
-            <div>
-              No se pudo validar tu usuario de GoHighLevel. Pide a un administrador que vincule tu usuario a esta empresa, o
-              <Link className="ml-1 underline" href="/login">
-                inicia sesión manualmente
-              </Link>
-              .
-            </div>
+            <div>No se pudo validar el usuario de esta subcuenta en GoHighLevel. Ábrela de nuevo desde su menú.</div>
           </Alert>
         </div>
       );

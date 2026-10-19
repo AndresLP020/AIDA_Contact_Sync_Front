@@ -3,12 +3,13 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useQueryClient } from '@tanstack/react-query';
 import { ArrowRight, Clock, ShieldCheck } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Suspense, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { ErrorAlert } from '@/components/common';
 import { Alert } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Input, Label } from '@/components/ui/form-controls';
+import { isEmbedded } from '@/hooks/use-embedded-context';
 import { type LoginForm, loginSchema } from '@/lib/schemas';
 import { authApi } from '@/services/endpoints';
 
@@ -40,6 +41,19 @@ function LoginCard() {
   }
 
   const { errors, isSubmitting } = form.formState;
+  const [embedded, setEmbedded] = useState(false);
+  useEffect(() => {
+    if (!isEmbedded()) return;
+    setEmbedded(true);
+    router.replace('/');
+  }, [router]);
+  if (embedded) {
+    return (
+      <main className="grid min-h-screen place-items-center p-5">
+        <p className="text-sm text-muted-foreground">Entrando con el usuario de esta subcuenta…</p>
+      </main>
+    );
+  }
   return (
     <main className="grid min-h-screen place-items-center p-5">
       <section className="w-full max-w-[410px] rounded-2xl border bg-card p-8 shadow-2xl shadow-black/50">
