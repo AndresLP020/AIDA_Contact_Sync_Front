@@ -17,6 +17,14 @@ export function isAllowedParentOrigin(origin: string, extra: string[] = EXTRA): 
   }
 }
 
+/** HighLevel sustituye {{location.name}} en la URL de la Custom Page. */
+export function locationNameFromSearch(search: string): string | undefined {
+  const params = new URLSearchParams(search);
+  const value = (params.get('location_name') ?? params.get('locationName') ?? '').trim();
+  if (!value || value.includes('{{')) return undefined;
+  return value.slice(0, 200);
+}
+
 export function isEmbedded() {
   if (typeof window === 'undefined') return false;
   try {
@@ -54,7 +62,7 @@ export function useEmbeddedHandshake(enabled: boolean, onSuccess: () => void, ti
       if (event.source !== window.parent || !isAllowedParentOrigin(event.origin)) return;
       const data = event.data as { message?: string; payload?: unknown } | null;
       if (data?.message !== 'REQUEST_USER_DATA_RESPONSE' || typeof data.payload !== 'string') return;
-      authApi.ghlContext(data.payload).then(
+      authApi.ghlContext(data.payload, locationNameFromSearch(window.location.search)).then(
         () => finish(true),
         (error: unknown) => {
           setDetail(error instanceof Error ? error.message : null);

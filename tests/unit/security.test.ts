@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { isAllowedParentOrigin } from '@/hooks/use-embedded-context';
+import { isAllowedParentOrigin, locationNameFromSearch } from '@/hooks/use-embedded-context';
 import { canRole } from '@/lib/labels';
 import { contactFormSchema, loginSchema, toContactPatch } from '@/lib/schemas';
 import { describeError, OAUTH_OUTCOME } from '@/lib/error-messages';
@@ -17,6 +17,11 @@ describe('Contexto incrustado: sólo se aceptan mensajes de GHL', () => {
   ])('%s → %s', (origin, ok) => expect(isAllowedParentOrigin(origin, [])).toBe(ok));
   it('acepta dominios white-label configurados explícitamente', () => {
     expect(isAllowedParentOrigin('https://crm.miagencia.test', ['https://crm.miagencia.test'])).toBe(true);
+  });
+  it('toma el nombre de la subcuenta que HighLevel deja en la URL', () => {
+    expect(locationNameFromSearch('?location_name=Jazomin')).toBe('Jazomin');
+    expect(locationNameFromSearch('?location_name={{location.name}}')).toBeUndefined();
+    expect(locationNameFromSearch('')).toBeUndefined();
   });
 });
 

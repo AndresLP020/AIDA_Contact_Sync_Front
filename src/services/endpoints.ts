@@ -31,7 +31,7 @@ export const authApi = {
   login: (email: string, password: string) => post<{ expiresAt: string }>('/auth/login', { email, password }),
   logout: () => post<{ ok: true }>('/auth/logout'),
   me: () => api<Me>('/auth/me'),
-  ghlContext: (encryptedData: string) => post<{ expiresAt: string }>('/auth/ghl-context', { encryptedData }),
+  ghlContext: (encryptedData: string, locationName?: string) => post<{ expiresAt: string }>('/auth/ghl-context', { encryptedData, ...(locationName ? { locationName } : {}) }),
 };
 
 export const companyApi = {
