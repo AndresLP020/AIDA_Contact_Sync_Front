@@ -4,6 +4,7 @@ import { FlaskConical, KeyRound, Link2, RefreshCw, ShieldCheck, Unplug } from 'l
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { ErrorAlert, PageHeader } from '@/components/common';
+import { ApiError } from '@/services/api-client';
 import { Alert } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -44,11 +45,34 @@ export function IntegrationsView() {
 
   const connect = useMutation({
     mutationFn: ghlApi.startOAuth,
-    // La autorización ocurre en GHL (ventana superior: el flujo OAuth no debe ejecutarse dentro del iframe).
-    onSuccess: ({ authorizationUrl }) => {
-      (window.top ?? window).location.assign(authorizationUrl);
-    },
   });
+
+  function connectGhl() {
+    // Hay que abrir la pestaña en el clic. Dentro del iframe de GHL el navegador
+    // bloquea mover la ventana principal después de la petición.
+    const popup = window.open('about:blank', 'aida_ghl_oauth');
+    connect.mutate(undefined, {
+      onSuccess: ({ authorizationUrl }) => {
+        if (popup && !popup.closed) {
+          popup.location.replace(authorizationUrl);
+          return;
+        }
+        try {
+          (window.top ?? window).location.assign(authorizationUrl);
+        } catch {
+          throw new ApiError(
+            0,
+            'OAUTH_POPUP_BLOCKED',
+            'El navegador bloqueó la ventana de autorización. Permite ventanas emergentes o entra a Integraciones desde aida-contact-sync-front.vercel.app.',
+            null,
+          );
+        }
+      },
+      onError: () => {
+        if (popup && !popup.closed) popup.close();
+      },
+    });
+  }
   const disconnect = useMutation({
     mutationFn: ghlApi.disconnect,
     onSuccess: () => {
@@ -131,7 +155,7 @@ export function IntegrationsView() {
         <CardFooter>
           {can('admin') ? (
             <>
-              <Button disabled={!s || s.simulated || connect.isPending} onClick={() => connect.mutate()}>
+              <Button disabled={!s || s.simulated || connect.isPending} onClick={connectGhl}>
                 <Link2 /> {connect.isPending ? 'Redirigiendo…' : s?.connected && !s.simulated ? 'Reconectar' : 'Conectar subcuenta GHL'}
               </Button>
               <Button variant="destructive" disabled={!s || s.simulated || !s.credential.present} onClick={() => setConfirmDisconnect(true)}>
