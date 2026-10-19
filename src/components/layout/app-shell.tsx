@@ -34,7 +34,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const onHandshake = useCallback(() => void qc.invalidateQueries({ queryKey: SESSION_KEY }), [qc]);
   // Cada apertura dentro de HighLevel vuelve a identificar la subcuenta, no la sesión de agencia que hubiera quedado.
   const handshake = useEmbeddedHandshake(embedded, onHandshake);
-  const waitingForSubaccount = embedded && handshake !== 'ok' && handshake !== 'failed';
+  const waitingForSubaccount = embedded && handshake.state !== 'ok' && handshake.state !== 'failed';
 
   useEffect(() => {
     if (session.unauthenticated && !isEmbedded()) router.replace('/login?expired=1');
@@ -47,12 +47,15 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   }
 
   if (waitingForSubaccount || !session.me) {
-    if (embedded && handshake === 'failed' && session.isFetched && !session.me) {
+    if (embedded && handshake.state === 'failed' && session.isFetched && !session.me) {
       return (
         <div className="grid min-h-screen place-items-center p-4">
           <Alert variant="warning" className="max-w-md">
             <ShieldAlert />
-            <div>No se pudo validar el usuario de esta subcuenta en GoHighLevel. Ábrela de nuevo desde su menú.</div>
+            <div>
+              No se pudo validar el usuario de esta subcuenta en GoHighLevel. Ábrela de nuevo desde su menú.
+              {handshake.detail ? <p className="mt-1 text-xs">{handshake.detail}</p> : null}
+            </div>
           </Alert>
         </div>
       );

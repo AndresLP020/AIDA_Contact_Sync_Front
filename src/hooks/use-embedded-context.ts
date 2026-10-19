@@ -32,8 +32,9 @@ export type HandshakeState = 'idle' | 'waiting' | 'ok' | 'failed';
  * Custom Page de GHL: pide al contenedor el contexto de usuario cifrado (REQUEST_USER_DATA) y lo envía al backend,
  * que lo descifra con el Shared Secret, valida la membresía y emite una sesión propia. El frontend nunca lo descifra.
  */
-export function useEmbeddedHandshake(enabled: boolean, onSuccess: () => void, timeoutMs = 8000): HandshakeState {
+export function useEmbeddedHandshake(enabled: boolean, onSuccess: () => void, timeoutMs = 8000): { state: HandshakeState; detail: string | null } {
   const [state, setState] = useState<HandshakeState>('idle');
+  const [detail, setDetail] = useState<string | null>(null);
   const started = useRef(false);
 
   useEffect(() => {
@@ -55,7 +56,10 @@ export function useEmbeddedHandshake(enabled: boolean, onSuccess: () => void, ti
       if (data?.message !== 'REQUEST_USER_DATA_RESPONSE' || typeof data.payload !== 'string') return;
       authApi.ghlContext(data.payload).then(
         () => finish(true),
-        () => finish(false),
+        (error: unknown) => {
+          setDetail(error instanceof Error ? error.message : null);
+          finish(false);
+        },
       );
     };
     const timer = window.setTimeout(() => finish(false), timeoutMs);
@@ -64,5 +68,5 @@ export function useEmbeddedHandshake(enabled: boolean, onSuccess: () => void, ti
     window.parent.postMessage({ message: 'REQUEST_USER_DATA' }, '*');
   }, [enabled, onSuccess, timeoutMs]);
 
-  return state;
+  return { state, detail };
 }
