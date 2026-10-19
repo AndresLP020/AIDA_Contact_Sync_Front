@@ -9,6 +9,7 @@ describe('Contexto incrustado: sólo se aceptan mensajes de GHL', () => {
     ['https://app.gohighlevel.com', true],
     ['https://agency.leadconnectorhq.com', true],
     ['https://x.msgsndr.com', true],
+    ['https://app.aidaworkspace.com', true],
     ['http://app.gohighlevel.com', false],
     ['https://gohighlevel.com.evil.test', false],
     ['https://evil.test', false],

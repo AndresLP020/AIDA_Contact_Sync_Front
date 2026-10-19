@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { authApi } from '@/services/endpoints';
 
 /** Dominios oficiales de HighLevel + NEXT_PUBLIC_GHL_PARENT_ORIGINS (dominios white-label de la agencia). */
-const OFFICIAL_SUFFIXES = ['.gohighlevel.com', '.leadconnectorhq.com', '.msgsndr.com'];
+const OFFICIAL_SUFFIXES = ['.gohighlevel.com', '.leadconnectorhq.com', '.msgsndr.com', '.aidaworkspace.com'];
 const EXTRA = (process.env.NEXT_PUBLIC_GHL_PARENT_ORIGINS ?? '').split(/[\s,]+/).filter(Boolean);
 
 export function isAllowedParentOrigin(origin: string, extra: string[] = EXTRA): boolean {

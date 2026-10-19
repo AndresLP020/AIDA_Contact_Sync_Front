@@ -14,7 +14,7 @@ const isDev = process.env.NODE_ENV !== 'production';
  * Orígenes que pueden incrustar la app en un iframe (Custom Page de GHL). Dominios oficiales de HighLevel
  * + FRAME_ANCESTORS (separados por espacios) para dominios white-label de la agencia.
  */
-const frameAncestors = ["'self'", 'https://app.gohighlevel.com', 'https://*.gohighlevel.com', 'https://*.leadconnectorhq.com', 'https://*.msgsndr.com', ...(process.env.FRAME_ANCESTORS ?? '').split(/\s+/).filter(Boolean)];
+const frameAncestors = ["'self'", 'https://app.gohighlevel.com', 'https://*.gohighlevel.com', 'https://*.leadconnectorhq.com', 'https://*.msgsndr.com', 'https://*.aidaworkspace.com', ...(process.env.FRAME_ANCESTORS ?? '').split(/\s+/).filter(Boolean)];
 
 const csp = [
   "default-src 'self'",

@@ -46,7 +46,7 @@ const MESSAGES: Record<string, string> = {
 
 export const OAUTH_OUTCOME: Record<string, { ok: boolean; message: string }> = {
   connected: { ok: true, message: 'Subcuenta GHL conectada correctamente. La configuración automática se está ejecutando.' },
-  installed: { ok: true, message: 'Instalación registrada. Un administrador de AIDA debe darte acceso a esta subcuenta.' },
+  installed: { ok: true, message: 'Instalación registrada. Abre AIDA desde el menú de la subcuenta: entras con tu usuario de HighLevel.' },
   agency_installed: { ok: true, message: 'Instalación de agencia procesada para las subcuentas autorizadas.' },
   agency_missing_scopes: { ok: false, message: 'El token de agencia no incluye oauth.readonly y oauth.write.' },
   agency_app_id_missing: { ok: false, message: 'Falta configurar GHL_APP_ID para instalaciones de agencia.' },
